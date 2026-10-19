@@ -1,0 +1,18 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build-env
+WORKDIR /app
+
+COPY backend/global.json ./global.json
+COPY backend/TickerHub.Api/*.csproj ./backend/TickerHub.Api/
+COPY apphost/ServiceDefaults/*.csproj ./apphost/ServiceDefaults/
+COPY backend/TickerHub.UnitTests/*.csproj ./backend/TickerHub.UnitTests/
+RUN dotnet restore ./backend/TickerHub.UnitTests/UnitTests.csproj
+
+COPY backend/TickerHub.Api/ ./backend/TickerHub.Api/
+COPY apphost/ServiceDefaults/ ./apphost/ServiceDefaults/
+COPY backend/TickerHub.UnitTests/ ./backend/TickerHub.UnitTests/
+
+#Set timezone to HK
+ENV TZ=Asia/Hong_Kong
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+WORKDIR /app/backend/TickerHub.UnitTests
