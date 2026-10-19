@@ -1,0 +1,20 @@
+networks:
+  pg_net:
+    external: true
+
+services:
+  test:
+    container_name: sh-api-unittest
+    image: sh-api-unittest
+    build:
+      context: ../
+      dockerfile: backend/Dockerfile-unittest
+    networks:
+      - pg_net
+    environment:
+      - DATABASE_CONSTR=User ID=${PG_USERNAME};Password=${PG_PASSWORD};Host=${PG_HOST};Port=${PG_PORT};Database=${PG_DATABASE};
+      - STOCKHUB_YFINANCE_GRPC=${STOCKHUB_YFINANCE_GRPC}
+    volumes:
+      # Persist test reports in the Jenkins workspace's TestResults directory.
+      - ../TestResults:/tests/UnitTests/TestResults
+    command: ./build.test.init.sh

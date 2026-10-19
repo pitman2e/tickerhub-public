@@ -1,0 +1,11 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Deploy') {
+            steps {
+                sh './backend/yfinance-grpc/ci/build.sh'
+            }
+        }
+    }
+}

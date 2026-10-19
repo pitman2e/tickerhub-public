@@ -1,0 +1,14 @@
+{
+    "search.exclude": {
+        "**/Migrations": true
+    },
+    "chat.tools.terminal.autoApprove": {
+        "dotnet test": true,
+        "npx @tanstack/intent@latest": true,
+        "npx vitest": true,
+        "npx tsc": true,
+        "npx eslint": true,
+        "dotnet build": true,
+        "npm test": true
+    }
+}
